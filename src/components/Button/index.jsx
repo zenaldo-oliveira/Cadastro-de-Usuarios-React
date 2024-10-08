@@ -1,12 +1,11 @@
-import { Button } from './styles'
+import { Button } from './styles';
 
-function DefaulButton(info){
+function DefaultButton({ children, ...props }) {
+  // ... spread operator -> Todo o resto
 
-   console.log(info)
-   
-   return (
-      <Button></Button>            
-   )
+  console.log(props);
+
+  return <Button {...props}>{children}</Button>;
 }
 
-export default DefaulButton
+export default DefaultButton;

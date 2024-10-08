@@ -1,18 +1,17 @@
-import { useRef } from "react";
-import api from "../../services/api";
+import { useRef } from 'react';
+import api from '../../services/api';
 
 import {
   Container,
-  TopBackground,
   Form,
   Title,
   ContainerInputs,
   Input,
   InputLabel,
+} from './styles';
 
-} from "./styles";
-import UserImage from "../../assets/users.png";
-import Button from '../../components/Button'
+import Button from '../../components/Button';
+import TopBackground from '../../components/TopBackground';
 
 function Home() {
   const inputName = useRef();
@@ -20,7 +19,7 @@ function Home() {
   const inputEmail = useRef();
 
   async function registerNewUser() {
-    const data = await api.post("/usuarios", {
+    const data = await api.post('/usuarios', {
       email: inputEmail.current.value,
       age: parseInt(inputAge.current.value),
       name: inputName.current.value,
@@ -31,10 +30,7 @@ function Home() {
 
   return (
     <Container>
-      <TopBackground>
-        <img src={UserImage} alt="Imagem de usuários" />
-      </TopBackground>
-
+      <TopBackground />
       <Form>
         <Title>Cadastrar Usuário</Title>
 
@@ -64,7 +60,7 @@ function Home() {
           </div>
         </ContainerInputs>
 
-        <div style={{ width: "100%" }}>
+        <div style={{ width: '100%' }}>
           <InputLabel htmlFor="email">
             E-mail <span> *</span>
           </InputLabel>

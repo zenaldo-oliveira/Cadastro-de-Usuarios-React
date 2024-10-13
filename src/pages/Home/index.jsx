@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 
 import {
@@ -7,22 +8,26 @@ import {
   Title,
   ContainerInputs,
   Input,
-  InputLabel,
-} from './styles';
+  InputLable,
+} from '../styles';
 
 import Button from '../../components/Button';
 import TopBackground from '../../components/TopBackground';
+
+// ... resto do código permanece o mesmo
 
 function Home() {
   const inputName = useRef();
   const inputAge = useRef();
   const inputEmail = useRef();
 
+  const navigate = useNavigate();
+
   async function registerNewUser() {
     const data = await api.post('/usuarios', {
+      name: inputName.current.value,
       email: inputEmail.current.value,
       age: parseInt(inputAge.current.value),
-      name: inputName.current.value,
     });
 
     console.log(data);
@@ -32,52 +37,53 @@ function Home() {
     <Container>
       <TopBackground />
       <Form>
-        <Title>Cadastrar Usuário</Title>
+        <Title>Cadastro de Usuário</Title>
 
         <ContainerInputs>
           <div>
-            <InputLabel htmlFor="nome">
-              Nome <span> *</span>
-            </InputLabel>
-            <Input
-              id="nome"
-              type="text"
-              placeholder="Nome do usuário"
-              ref={inputName}
-            />
+            <InputLable>
+              Nome<span> #</span>
+            </InputLable>
+            <Input type="text" placeholder="Nome do Usuário" ref={inputName} />
           </div>
 
           <div>
-            <InputLabel htmlFor="idade">
-              Idade <span> *</span>
-            </InputLabel>
+            <InputLable>
+              Idade<span> #</span>
+            </InputLable>
             <Input
-              id="idade"
               type="number"
-              placeholder="Idade do usuário"
+              placeholder="Idade do Usuário"
               ref={inputAge}
             />
           </div>
         </ContainerInputs>
 
         <div style={{ width: '100%' }}>
-          <InputLabel htmlFor="email">
-            E-mail <span> *</span>
-          </InputLabel>
+          <InputLable>
+            E-mail<span> #</span>
+          </InputLable>
           <Input
-            id="email"
             type="email"
-            placeholder="E-mail do usuário"
+            placeholder="E-mail do Usuário"
             ref={inputEmail}
           />
         </div>
 
-        <Button type="button" onClick={registerNewUser}>
+        <Button type="button" onClick={registerNewUser} theme="primary">
           Cadastrar Usuário
         </Button>
       </Form>
+      <Button type="button" onClick={() => navigate('/lista-de-usuarios')}>
+        Ver Lista de Usuários
+      </Button>
     </Container>
   );
 }
 
 export default Home;
+
+/*
+  export default - Exportar padrão = default - uma coisa por página
+  apenas Exportar - colocar export antes das funções componente React
+*/

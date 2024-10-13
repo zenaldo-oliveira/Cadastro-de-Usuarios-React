@@ -4,7 +4,7 @@ import { Background } from './styles';
 function TopBackground() {
   return (
     <Background>
-      <img src={UserImage} alt="Imagem de usuários" />
+      <img src={UserImage} alt="imagem-usuarios" />
     </Background>
   );
 }

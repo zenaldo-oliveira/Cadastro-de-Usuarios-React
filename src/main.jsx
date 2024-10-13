@@ -1,15 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { GlobalStyles } from "./styles/GlobalStyles"; // Import dos estilos globais
-import { RouterProvider } from "react-router-dom";
-import router from "./routes";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { GlobalStyles } from './styles/GlobalStyles.js';
+import { RouterProvider } from 'react-router-dom';
+import router from './routes.jsx';
 
-
-
-// Renderiza o componente principal da aplicação
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <GlobalStyles />  {/* Global styles aplicado no nível mais alto */}
+    <GlobalStyles />
     <RouterProvider router={router} />
   </React.StrictMode>,
 );

@@ -1,93 +1,72 @@
-import { useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import api from '../../services/api';
-// ... outras importações necessárias
+
+import Button from '../../components/Button';
+import Title from '../../components/Title';
+import TopBackground from '../../components/TopBackground';
+import Trash from '../../assets/trash.svg';
 
 import {
   Container,
-  Form,
-  Title,
-  ContainerInputs,
-  Input,
-  InputLabel,
-} from '../styles';
+  ContainerUsers,
+  CardUser,
+  TrashIcon,
+  AvatarUser,
+} from './styles';
 
-import Button from '../../../components/Button';
-import TopBackground from '../../../components/TopBackground';
-
-function Home() {
-  const inputName = useRef();
-  const inputAge = useRef();
-  const inputEmail = useRef();
-
+function ListUsers() {
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
-  async function registerNewUser() {
-    await api.post('/usuarios', {
-      email: inputEmail.current.value,
-      age: parseInt(inputAge.current.value),
-      name: inputName.current.value,
-    });
+  useEffect(() => {
+    async function getUsers() {
+      const { data } = await api.get('/usuarios');
 
-    navigate('/lista-de-usuarios');
+      setUsers(data);
+    }
+    getUsers();
+  }, []);
+
+  async function deleteUser(id) {
+    await api.delete(`/usuario/${id}`);
+
+    const updatedUsers = users.filter((user) => user.id != id);
+
+    setUsers(updatedUsers);
   }
 
   return (
     <Container>
       <TopBackground />
+      <Title>Lista de Usuários</Title>
 
-      <Form>
-        <Title>Cadastrar Usuário</Title>
-
-        <ContainerInputs>
-          <div>
-            <InputLabel htmlFor="nome">
-              Nome <span> *</span>
-            </InputLabel>
-            <Input
-              id="nome"
-              type="text"
-              placeholder="Nome do usuário"
-              ref={inputName}
+      <ContainerUsers>
+        {users.map((user) => (
+          <CardUser key={user.id}>
+            <AvatarUser
+              src={`https://avatar.iran.liara.run/public?username=${user.id}`}
             />
-          </div>
-
-          <div>
-            <InputLabel htmlFor="idade">
-              Idade <span> *</span>
-            </InputLabel>
-            <Input
-              id="idade"
-              type="number"
-              placeholder="Idade do usuário"
-              ref={inputAge}
+            <div>
+              <h3>{user.name}</h3>
+              <p>{user.age}</p>
+              <p>{user.email}</p>
+            </div>
+            <TrashIcon
+              src={Trash}
+              alt="icon-lixo"
+              onClick={() => deleteUser(user.id)}
             />
-          </div>
-        </ContainerInputs>
+          </CardUser>
+        ))}
+      </ContainerUsers>
 
-        <div style={{ width: '100%' }}>
-          <InputLabel htmlFor="email">
-            E-mail <span> *</span>
-          </InputLabel>
-          <Input
-            id="email"
-            type="email"
-            placeholder="E-mail do usuário"
-            ref={inputEmail}
-          />
-        </div>
-
-        <Button type="button" onClick={registerNewUser} theme="primary">
-          Cadastrar Usuário
-        </Button>
-      </Form>
-
-      <Button type="button" onClick={() => navigate('/lista-de-usuarios')}>
-        {''}
-        Ver Lista de Usuários
+      <Button type="button" theme="primary" onClick={() => navigate('/')}>
+        Voltar
       </Button>
     </Container>
   );
 }
 
-export default Home;
+export default ListUsers;

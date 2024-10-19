@@ -1,7 +1,7 @@
 import { Title } from './styles';
 
 function DefaultTitle() {
-  return <Title></Title>;
+  return <Title>Lista de Usuários</Title>;
 }
 
 export default DefaultTitle;

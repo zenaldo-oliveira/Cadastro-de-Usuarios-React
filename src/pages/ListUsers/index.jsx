@@ -29,7 +29,7 @@ function ListUsers() {
     getUsers();
   }, []);
 
-  async function deleteUser(id) {
+  async function deleteUsers(id) {
     await api.delete(`/usuario/${id}`);
 
     const updatedUsers = users.filter((user) => user.id != id);
@@ -50,13 +50,13 @@ function ListUsers() {
             />
             <div>
               <h3>{user.name}</h3>
-              <p>{user.age}</p>
               <p>{user.email}</p>
+              <p>{user.age}</p>
             </div>
             <TrashIcon
               src={Trash}
               alt="icon-lixo"
-              onClick={() => deleteUser(user.id)}
+              onClick={() => deleteUsers(user.id)}
             />
           </CardUser>
         ))}
